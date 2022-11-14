@@ -1,6 +1,5 @@
 import io.restassured.RestAssured;
 import org.testng.annotations.BeforeClass;
-
 import static io.restassured.RestAssured.given;
 
 

@@ -1,4 +1,9 @@
 import io.qameta.allure.Description;
+import io.qameta.allure.Step;
+import io.restassured.RestAssured;
+import io.restassured.http.Cookies;
+import io.restassured.http.Header;
+import io.restassured.http.Headers;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -6,12 +11,6 @@ import java.util.List;
 
 public class BookingTests extends BaseTest {
 
-    @Test
-    @Description("Проверяем создание брони")
-    public void createBookingTest () {
-        Response resp =  createBooking.createBooking();
-        Assert.assertNotNull(resp);
-    }
 
     @Test
     @Description("Проверка создания токена для дальнейшей авторизации")
@@ -24,10 +23,9 @@ public class BookingTests extends BaseTest {
     @Test
     @Description("Проверка удаления созданной записи бронирования")
     public void deleteBookingTest () {
-        String token =  createToken.createToken();
+        String token = createToken.createToken();
         Response resp = createBooking.createBooking();
         deleteBooking.deleteBooking(resp,token);
-
     }
 
     @Test
@@ -65,6 +63,15 @@ public class BookingTests extends BaseTest {
     }
 
     @Test
+    @Description("Проверка получения информации по конкретному ")
+    public void getBookingTestWithXml () {
+        List<Integer> bookingIdList = getBookingIds.getBookingIds();
+        int id =   getBookingIds.getScpecificBookingId(bookingIdList);
+        getBookingIds.getBooking(id,true);
+    }
+
+
+    @Test
     @Description("Проверка успешного частичного апдейта информации по бронированию")
     public void partialUpdateBookingTest () {
         String token = createToken.createToken();
@@ -75,9 +82,42 @@ public class BookingTests extends BaseTest {
     @Description("Проверка полного апдейта бронирования")
     @Test
     public void updateBookingTest () {
-        String token  = createToken.createToken();
+        String token = createToken.createToken();
         Response resp = createBooking.createBooking();
         updateBooking.updateBooking(resp, token);
     }
 
+    @Description("Проверка создания брони через pojo")
+    @Test
+    public void createBookingTest () {
+        Response response = createBooking.createBookingPojo();
+        Assert.assertNotNull(response);
+    }
+
+
+    @Test
+    public void headersAndCookiesTest () {
+        /*Header someHeader = new Header("some name", "some value");
+        spec.header(someHeader);
+
+        Cookie someCookie = new Cookie.Builder("some cookie", "some cookie value").build();
+        spec.cookie(someCookie);*/
+
+        Response response = RestAssured.given()
+                .cookie("Test cookie name", "Test cookie value ")
+                .header("Test header name", "Test header value")
+                .log().all()
+                .get("/ping.");
+        Headers headers = response.getHeaders();
+        System.out.println("Headers: " + headers);
+
+        Header serverHeader1 = headers.get("Server");
+        System.out.println(serverHeader1.getName() + ": "  + serverHeader1.getValue());
+
+        String serverHeader2 = response.getHeader("Server");
+        System.out.println("Server: " +  serverHeader2);
+
+        Cookies cookies = response.getDetailedCookies();
+        System.out.println("Cookies: " + cookies);
+    }
 }

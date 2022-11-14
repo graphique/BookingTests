@@ -1,6 +1,9 @@
 
 import io.qameta.allure.Step;
+import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
+
 import java.util.List;
 import static io.restassured.RestAssured.given;
 
@@ -51,18 +54,37 @@ public class GetBookingIds  {
     }
 
 
-    @Step("gets a first booking id from booking ids")
+    @Step("gets a second booking id from booking ids")
     public Integer getScpecificBookingId (List<Integer> bookingIds) {
-        int id = bookingIds.get(0);
+        int id = bookingIds.get(1);
         return id;
     }
 
+
     @Step("gets an information about booking by specific id")
     public void getBooking (Integer id) {
-        Response response = given()
+        Response response = given().log().all()
                 .when()
                 .get("booking/" + id);
-       response.then().log().all().statusCode(200);
+
+        response.then().log().all().statusCode(200);
+    }
+
+
+    @Step("gets an xml information about booking by specific id")
+    public void getBooking (Integer id, boolean xml) {
+        RequestSpecification spec = new RequestSpecBuilder().build();
+
+        if (xml == true ){
+            spec.header("Accept","application/xml");
+        } else  {
+
+        }
+        Response response = given().spec(spec).log().all()
+                .when()
+                .get("booking/" + id);
+
+        response.then().log().all().statusCode(200);
     }
 
 }
