@@ -1,5 +1,4 @@
 import io.qameta.allure.Description;
-import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.http.Cookies;
 import io.restassured.http.Header;
@@ -94,7 +93,7 @@ public class BookingTests extends BaseTest {
         Assert.assertNotNull(response);
     }
 
-
+    @Description("Проверка получения куки и хедеров ответа")
     @Test
     public void headersAndCookiesTest () {
         /*Header someHeader = new Header("some name", "some value");

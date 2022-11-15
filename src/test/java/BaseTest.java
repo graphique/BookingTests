@@ -15,8 +15,6 @@ public class BaseTest {
 
     @BeforeClass
     public static void setUp () {
-       // RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
-
         //setting base uri
         RestAssured.baseURI  = "https://restful-booker.herokuapp.com/";
 

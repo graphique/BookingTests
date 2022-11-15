@@ -1,0 +1,31 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name = "Suite1">
+
+    <test name = "test1">
+        <parameter name = "bookingName" value="manisha"/>
+        <classes>
+            <class name = "CreateBookingTest" />
+        </classes>
+    </test>
+    <test name = "test2">
+        <parameter name = "bookingName" value="IGOR"/>
+        <classes>
+            <class name = "CreateBookingTest" />
+        </classes>
+    </test>
+    <test name = "test3">
+        <parameter name = "bookingName" value="12345"/>
+        <classes>
+            <class name = "CreateBookingTest" />
+        </classes>
+    </test>
+
+    <test name = "test4">
+        <classes>
+            <class name = "BookingTests" />
+        </classes>
+    </test>
+
+</suite>
