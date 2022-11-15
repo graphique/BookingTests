@@ -1,8 +1,10 @@
+package Steps;
+
+import Constants.Constants;
 import Pojo.Booking;
 import Pojo.Bookingdates;
 import Pojo.Bookingid;
 import io.qameta.allure.Step;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.json.JSONObject;
 import org.testng.Assert;
@@ -29,10 +31,9 @@ public class CreateBooking {
 
 
         Response response = given().log().all()
-                .contentType(ContentType.JSON)
                 .body(body.toString())
                 .when()
-                .post("booking");
+                .post(Constants.BOOKING);
 
         response.then().log().all().statusCode(200);
 
@@ -64,10 +65,9 @@ public class CreateBooking {
 
 
         Response response = given().log().all()
-                .contentType(ContentType.JSON)
                 .body(body.toString())
                 .when()
-                .post("booking");
+                .post(Constants.BOOKING);
 
         response.then().log().all().statusCode(200);
 
@@ -87,10 +87,9 @@ public class CreateBooking {
                 true,bookingdates,"Breakfast");
 
         Response response = given().log().all()
-                .contentType(ContentType.JSON)
                 .body(booking)
                 .when()
-                .post("booking");
+                .post(Constants.BOOKING);
 
         response.then().log().all().statusCode(200);
 

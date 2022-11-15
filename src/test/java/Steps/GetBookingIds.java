@@ -1,9 +1,10 @@
+package Steps;
 
+import Constants.Constants;
 import io.qameta.allure.Step;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-
 import java.util.List;
 import static io.restassured.RestAssured.given;
 
@@ -14,7 +15,7 @@ public class GetBookingIds  {
     public List<Integer> getBookingIds () {
        Response response = given().log().all()
             .when()
-            .get("booking");
+            .get(Constants.BOOKING);
               List<Integer > ids = response.jsonPath().getList("bookingid");
               return ids;
     }
@@ -28,7 +29,7 @@ public class GetBookingIds  {
                 .queryParam("firstname",firstname)
                 .queryParam("lastname",lastname)
                 .when()
-                .get("booking");
+                .get(Constants.BOOKING);
         List<Integer > ids = response.jsonPath().getList("bookingid");
 
         response.then().log().all().statusCode(200);
@@ -45,7 +46,7 @@ public class GetBookingIds  {
                 .queryParam("checkin",checkin)
                 .queryParam("checkout",checkout)
                 .when()
-                .get("booking");
+                .get(Constants.BOOKING);
         List<Integer > ids = response.jsonPath().getList("bookingid");
 
         response.then().log().all().statusCode(200);
@@ -65,7 +66,7 @@ public class GetBookingIds  {
     public void getBooking (Integer id) {
         Response response = given().log().all()
                 .when()
-                .get("booking/" + id);
+                .get(Constants.BOOKING + id);
 
         response.then().log().all().statusCode(200);
     }
@@ -82,7 +83,7 @@ public class GetBookingIds  {
         }
         Response response = given().spec(spec).log().all()
                 .when()
-                .get("booking/" + id);
+                .get(Constants.BOOKING + id);
 
         response.then().log().all().statusCode(200);
     }

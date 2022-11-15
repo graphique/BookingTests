@@ -1,6 +1,8 @@
+package Steps;
+
+import Constants.Constants;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.Assert;
 
@@ -13,10 +15,9 @@ public class DeleteBooking {
         int bookingId = createdBookingResponse.jsonPath().getInt("bookingid");
 
         Response response = given().log().all()
-                .contentType(ContentType.JSON)
                 .header("Cookie","token=" + token)
                 .when()
-                .delete("booking/" + bookingId);
+                .delete(Constants.BOOKING + bookingId);
 
         response.then().log().all().statusCode(201);
         System.out.println("booking id " + bookingId + " was deleted");

@@ -1,3 +1,4 @@
+import Constants.Constants;
 import io.qameta.allure.Description;
 import io.restassured.RestAssured;
 import io.restassured.http.Cookies;
@@ -106,7 +107,7 @@ public class BookingTests extends BaseTest {
                 .cookie("Test cookie name", "Test cookie value ")
                 .header("Test header name", "Test header value")
                 .log().all()
-                .get("/ping.");
+                .get(Constants.PING);
         Headers headers = response.getHeaders();
         System.out.println("Headers: " + headers);
 

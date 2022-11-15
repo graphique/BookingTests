@@ -1,5 +1,7 @@
+package Steps;
+
+import Constants.Constants;
 import io.qameta.allure.Step;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.json.JSONObject;
 
@@ -10,14 +12,13 @@ public class CreateToken {
     @Step("creates an auth token")
     public String createToken (){
         JSONObject body = new JSONObject();
-        body.put("username","admin");
-        body.put("password","password123");
+        body.put("username", Constants.USERNAME);
+        body.put("password",Constants.PASSWORD);
 
         Response response =    given().log().all()
                 .body(body.toString())
-                .contentType(ContentType.JSON)
                 .when()
-                .post("auth")
+                .post(Constants.AUTH)
                 .then().extract().response();
 
         String token = response.body().jsonPath().getString("token");

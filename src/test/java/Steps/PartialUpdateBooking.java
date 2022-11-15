@@ -1,5 +1,7 @@
+package Steps;
+
+import Constants.Constants;
 import io.qameta.allure.Step;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.json.JSONObject;
 import org.testng.Assert;
@@ -18,11 +20,10 @@ public class PartialUpdateBooking  {
         body.put("lastname","Chaney");//это будет отличаться
 
         Response response  = given().log().all()
-                .contentType(ContentType.JSON)
                 .body(body.toString()) //взять тело из созданной сущности
                 .header("Cookie","token=" + token)
                 .when()
-                .patch("booking/" + bookingId);
+                .patch(Constants.BOOKING + bookingId);
 
         response.then().log().all().statusCode(200);
 
