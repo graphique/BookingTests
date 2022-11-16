@@ -24,7 +24,7 @@ public class BookingTests extends BaseTest {
     @Description("Проверка удаления созданной записи бронирования")
     public void deleteBookingTest () {
         String token = createToken.createToken();
-        Response resp = createBooking.createBooking();
+        Response resp = createBooking.createBooking(dataGenerator);
         deleteBooking.deleteBooking(resp,token);
     }
 
@@ -39,7 +39,7 @@ public class BookingTests extends BaseTest {
     @Test
     @Description("Проверка получения всех id бронирований по имени и фамилии гостя")
     public void getBookingIdsByNameTest () {
-      Response resp =   createBooking.createBooking();
+      Response resp =   createBooking.createBooking(dataGenerator);
       List<Integer> ids =   getBookingIds.getBookingIdsByName(resp);
       Assert.assertNotNull(ids);
     }
@@ -48,7 +48,7 @@ public class BookingTests extends BaseTest {
     @Test
     @Description("Проверка получения всех id бронирований по дате вьезда и выезда")
     public void getBookingIdsByDateTest () {
-        Response resp = createBooking.createBooking();
+        Response resp = createBooking.createBooking(dataGenerator);
         List<Integer> ids =   getBookingIds.getBookingIdsByDate(resp);
         Assert.assertNotNull(ids);
     }
@@ -75,7 +75,7 @@ public class BookingTests extends BaseTest {
     @Description("Проверка успешного частичного апдейта информации по бронированию")
     public void partialUpdateBookingTest () {
         String token = createToken.createToken();
-        Response resp = createBooking.createBooking();
+        Response resp = createBooking.createBooking(dataGenerator);
         partialUpdateBooking.partialUpdateBooking(resp,token);
     }
 
@@ -83,14 +83,14 @@ public class BookingTests extends BaseTest {
     @Test
     public void updateBookingTest () {
         String token = createToken.createToken();
-        Response resp = createBooking.createBooking();
+        Response resp = createBooking.createBooking(dataGenerator);
         updateBooking.updateBooking(resp, token);
     }
 
     @Description("Проверка создания брони через pojo")
     @Test
     public void createBookingTest () {
-        Response response = createBooking.createBookingPojo();
+        Response response = createBooking.createBookingPojo(dataGenerator);
         Assert.assertNotNull(response);
     }
 

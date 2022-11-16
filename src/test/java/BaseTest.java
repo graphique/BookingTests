@@ -1,4 +1,5 @@
 import Constants.Constants;
+import Data.DataGenerator;
 import Steps.*;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
@@ -16,6 +17,7 @@ public class BaseTest {
     GetBookingIds getBookingIds = new GetBookingIds();
     PartialUpdateBooking partialUpdateBooking = new PartialUpdateBooking();
     UpdateBooking updateBooking = new UpdateBooking();
+    DataGenerator dataGenerator = new DataGenerator();
 
 
 
