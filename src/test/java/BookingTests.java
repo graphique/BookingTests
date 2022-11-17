@@ -1,4 +1,6 @@
 import Constants.Constants;
+import Pojo.Booking;
+import Pojo.Bookingid;
 import io.qameta.allure.Description;
 import io.restassured.RestAssured;
 import io.restassured.http.Cookies;
@@ -24,8 +26,8 @@ public class BookingTests extends BaseTest {
     @Description("Проверка удаления созданной записи бронирования")
     public void deleteBookingTest () {
         String token = createToken.createToken();
-        Response resp = createBooking.createBooking(dataGenerator);
-        deleteBooking.deleteBooking(resp,token);
+        Bookingid bookingid = createBooking.createBooking(dataGenerator);
+        deleteBooking.deleteBooking(bookingid,token);
     }
 
     @Test
@@ -39,8 +41,8 @@ public class BookingTests extends BaseTest {
     @Test
     @Description("Проверка получения всех id бронирований по имени и фамилии гостя")
     public void getBookingIdsByNameTest () {
-      Response resp =   createBooking.createBooking(dataGenerator);
-      List<Integer> ids =   getBookingIds.getBookingIdsByName(resp);
+      Bookingid bookingid =   createBooking.createBooking(dataGenerator);
+      List<Integer> ids =   getBookingIds.getBookingIdsByName(bookingid.getBooking());
       Assert.assertNotNull(ids);
     }
 
@@ -48,8 +50,8 @@ public class BookingTests extends BaseTest {
     @Test
     @Description("Проверка получения всех id бронирований по дате вьезда и выезда")
     public void getBookingIdsByDateTest () {
-        Response resp = createBooking.createBooking(dataGenerator);
-        List<Integer> ids =   getBookingIds.getBookingIdsByDate(resp);
+        Bookingid bookingid = createBooking.createBooking(dataGenerator);
+        List<Integer> ids =   getBookingIds.getBookingIdsByDate(bookingid.getBooking());
         Assert.assertNotNull(ids);
     }
 
@@ -75,23 +77,23 @@ public class BookingTests extends BaseTest {
     @Description("Проверка успешного частичного апдейта информации по бронированию")
     public void partialUpdateBookingTest () {
         String token = createToken.createToken();
-        Response resp = createBooking.createBooking(dataGenerator);
-        partialUpdateBooking.partialUpdateBooking(resp,token);
+        Bookingid bookingid = createBooking.createBooking(dataGenerator);
+        partialUpdateBooking.partialUpdateBooking(bookingid,token);
     }
 
     @Description("Проверка полного апдейта бронирования")
     @Test
     public void updateBookingTest () {
         String token = createToken.createToken();
-        Response resp = createBooking.createBooking(dataGenerator);
-        updateBooking.updateBooking(resp, token);
+        Bookingid bookingid = createBooking.createBooking(dataGenerator);
+        updateBooking.updateBooking(bookingid, token);
     }
 
     @Description("Проверка создания брони через pojo")
     @Test
     public void createBookingTest () {
-        Response response = createBooking.createBookingPojo(dataGenerator);
-        Assert.assertNotNull(response);
+        Bookingid bookingid = createBooking.createBookingPojo(dataGenerator);
+        Assert.assertNotNull(bookingid);
     }
 
     @Description("Проверка получения куки и хедеров ответа")

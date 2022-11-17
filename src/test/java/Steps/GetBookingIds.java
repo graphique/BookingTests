@@ -1,12 +1,15 @@
 package Steps;
 
 import Constants.Constants;
+import Pojo.Booking;
+import Pojo.Bookingdates;
 import io.qameta.allure.Step;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import java.util.List;
 import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.urlEncodingEnabled;
 
 public class GetBookingIds  {
 
@@ -21,9 +24,9 @@ public class GetBookingIds  {
     }
 
     @Step("gets all booking ids by firstname and lastname")
-    public List<Integer> getBookingIdsByName (Response resp) {
-        String firstname = resp.jsonPath().getString("booking.firstname");
-        String lastname = resp.jsonPath().getString("booking.lastname");
+    public List<Integer> getBookingIdsByName (Booking booking) {
+        String firstname = booking.getFirstname();
+        String lastname = booking.getLastname();
 
         Response response = given().log().all()
                 .queryParam("firstname",firstname)
@@ -38,9 +41,11 @@ public class GetBookingIds  {
     }
 
     @Step("gets all booking ids by checkin and checkout date")
-    public List<Integer> getBookingIdsByDate (Response resp) {
-        String checkin = resp.jsonPath().getString("booking.bookingdates.checkin");
-        String checkout = resp.jsonPath().getString("booking.bookingdates.checkout");
+    public List<Integer> getBookingIdsByDate (Booking booking) {
+        Bookingdates bookingdates = booking.getBookingdates();
+
+        String checkin = bookingdates.getCheckin();
+        String checkout = bookingdates.getCheckout();
 
         Response response = given().log().all()
                 .queryParam("checkin",checkin)

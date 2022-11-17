@@ -1,43 +1,33 @@
 package Steps;
 
 import Constants.Constants;
+import Pojo.Booking;
+import Pojo.Bookingid;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
-import org.json.JSONObject;
 import org.testng.Assert;
-
 import static io.restassured.RestAssured.given;
 
 public class UpdateBooking  {
 
     @Step("updates a firstname of customer")
-    public void updateBooking (Response createdBookingResponse, String token) {
+    public void updateBooking (Bookingid bookingid, String token) {
 
-        int bookingId = createdBookingResponse.jsonPath().getInt("bookingid");
+        int bookingId = bookingid.getBookingid();
+        Booking booking = bookingid.getBooking();
+        String expectedFirstName = booking.getFirstname();
 
-        JSONObject body = new JSONObject();
-        body.put("firstname","James");//это будет отличаться
-        body.put("lastname",createdBookingResponse.jsonPath().getString("booking.lastname"));
-        body.put("totalprice",createdBookingResponse.jsonPath().getInt("booking.totalprice"));
-        body.put("depositpaid",createdBookingResponse.jsonPath().getBoolean("booking.depositpaid"));
-
-        JSONObject bookingdates = new JSONObject();
-        bookingdates.put("checkin",createdBookingResponse.jsonPath().getString("booking.bookingdates.checkin"));
-        bookingdates.put("checkout",createdBookingResponse.jsonPath().getString("booking.bookingdates.checkout"));
-
-        body.put("bookingdates",bookingdates);
-
-        body.put("additionalneeds",createdBookingResponse.jsonPath().getString("booking.additionalneeds"));
+        booking.setFirstname("James");
 
         Response response  = given().log().all()
-                .body(body.toString()) //взять тело из созданной сущности
+                .body(booking) //взять тело из созданной сущности
                 .header("Cookie","token=" + token)
                 .when()
                 .put(Constants.BOOKING + bookingId);
 
         response.then().log().all().statusCode(200);
 
-        String expectedFirstName = createdBookingResponse.jsonPath().getString("booking.firstname");
+
         String factFirstName = response.jsonPath().getString("firstname");
         Assert.assertNotEquals(expectedFirstName,factFirstName);
 

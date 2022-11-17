@@ -1,3 +1,4 @@
+import Pojo.Bookingid;
 import io.qameta.allure.Description;
 import io.restassured.response.Response;
 import org.testng.Assert;
@@ -10,8 +11,8 @@ public class CreateBookingTest  extends BaseTest{
     @Description("Проверяем создание брони с разными именами")
     @Parameters("bookingName")
     public void createBookingTest (String bookingName) {
-        Response resp = createBooking.createBooking(bookingName,dataGenerator);
-        Assert.assertNotNull(resp);
+        Bookingid bookingid = createBooking.createBooking(bookingName,dataGenerator);
+        Assert.assertNotNull(bookingid);
     }
 
 }
