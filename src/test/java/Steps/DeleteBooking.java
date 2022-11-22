@@ -23,7 +23,7 @@ public class DeleteBooking {
         response.then().log().all().statusCode(201);
         System.out.println("booking id " + id + " was deleted");
 
-        Response responseDeletedBooking = RestAssured.get("booking" + id);
+        Response responseDeletedBooking = RestAssured.get(Constants.BOOKING + id);
         Assert.assertEquals(responseDeletedBooking.getStatusCode(),404);
 
         return id;

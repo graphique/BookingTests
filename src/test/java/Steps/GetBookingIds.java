@@ -9,7 +9,7 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import java.util.List;
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.urlEncodingEnabled;
+
 
 public class GetBookingIds  {
 

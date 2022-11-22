@@ -12,37 +12,26 @@ import static io.restassured.RestAssured.given;
 public class CreateBooking  {
 
     @Step("creates a booking with parameter name")
-    public Bookingid createBooking (String name, DataGenerator dataGenerator)  {
-
-        Bookingdates bookingdates = new Bookingdates("2022-01-01","2022-01-10");
+    public Booking prepareBooking (String name, DataGenerator dataGenerator)  {
+        Bookingdates bookingdates = new Bookingdates(dataGenerator.getCheckin(),dataGenerator.getCheckout());
         Booking booking = new Booking(name,dataGenerator.getLastname(),111,
                 true,bookingdates,"Breakfast");
-
-        Response response = given().log().all()
-                .body(booking)
-                .when()
-                .post(Constants.BOOKING);
-
-        response.then().log().all().statusCode(200);
-
-        Bookingid bookingid = response.as(Bookingid.class);
-
-        String actual = bookingid.getBooking().toString();
-        String expected = booking.toString();
-
-        Assert.assertEquals(actual,expected);
-
-        return bookingid;
+        return booking;
 
     }
 
 
     @Step("creates a booking with a generated name")
-    public Bookingid createBooking (DataGenerator dataGenerator)  {
-        Bookingdates bookingdates = new Bookingdates("2022-01-01","2022-01-10");
+    public Booking prepareBooking (DataGenerator dataGenerator)  {
+        Bookingdates bookingdates = new Bookingdates(dataGenerator.getCheckin(),dataGenerator.getCheckout());
         Booking booking = new Booking(dataGenerator.getFirstname(),dataGenerator.getLastname(),111,
                 true,bookingdates,"Breakfast");
+        return booking;
 
+    }
+
+    @Step("checks a created booking")
+    public Bookingid createBooking (Booking booking) {
         Response response = given().log().all()
                 .body(booking)
                 .when()
@@ -50,39 +39,14 @@ public class CreateBooking  {
 
         response.then().log().all().statusCode(200);
 
-        Bookingid bookingid = response.as(Bookingid.class);
+        Bookingid bookingidnew = response.as(Bookingid.class);
 
-        String actual = bookingid.getBooking().toString();
+        String actual = bookingidnew.getBooking().toString();
         String expected = booking.toString();
 
         Assert.assertEquals(actual,expected);
-
-        return bookingid;
+        return bookingidnew;
 
     }
-
-    @Step("creates a booking with using pojo")
-    public Bookingid createBookingPojo (DataGenerator dataGenerator) {
-        Bookingdates bookingdates = new Bookingdates("2022-01-01","2022-01-10");
-        Booking booking = new Booking(dataGenerator.getFirstname(),dataGenerator.getLastname(),111,
-                true,bookingdates,"Breakfast");
-
-        Response response = given().log().all()
-                .body(booking)
-                .when()
-                .post(Constants.BOOKING);
-
-        response.then().log().all().statusCode(200);
-
-        Bookingid bookingid = response.as(Bookingid.class);
-
-        String actual = bookingid.getBooking().toString();
-        String expected = booking.toString();
-
-        Assert.assertEquals(actual,expected);
-
-        return bookingid;
-    }
-
 
 }

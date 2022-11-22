@@ -5,9 +5,7 @@ import Pojo.Booking;
 import Pojo.Bookingid;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
-import org.json.JSONObject;
 import org.testng.Assert;
-
 import static io.restassured.RestAssured.given;
 
 public class PartialUpdateBooking  {
@@ -16,22 +14,22 @@ public class PartialUpdateBooking  {
     public void partialUpdateBooking (Bookingid bookingid, String token) {
 
         int bookingId = bookingid.getBookingid();
+        Booking booking = bookingid.getBooking();
 
-        JSONObject body = new JSONObject();
-        body.put("firstname","Dick");//это будет отличаться
-        body.put("lastname","Chaney");//это будет отличаться
+        booking.setFirstname("Dick");
+        booking.setLastname("Chaney");
 
         Response response  = given().log().all()
-                .body(body.toString()) //взять тело из созданной сущности
+                .body(booking) //взять тело из созданной сущности
                 .header("Cookie","token=" + token)
                 .when()
                 .patch(Constants.BOOKING + bookingId);
 
         response.then().log().all().statusCode(200);
 
-        String expectedFirstName = bookingid.getBooking().getFirstname();
-        String factFirstName = response.jsonPath().getString("firstname");
-        Assert.assertNotEquals(expectedFirstName,factFirstName);
+        Booking newbooking = response.as(Booking.class);
+
+        Assert.assertNotEquals(booking,newbooking);
 
     }
 }

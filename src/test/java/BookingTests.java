@@ -26,7 +26,8 @@ public class BookingTests extends BaseTest {
     @Description("Проверка удаления созданной записи бронирования")
     public void deleteBookingTest () {
         String token = createToken.createToken();
-        Bookingid bookingid = createBooking.createBooking(dataGenerator);
+        Booking booking = createBooking.prepareBooking(dataGenerator);
+        Bookingid bookingid = createBooking.createBooking(booking);
         deleteBooking.deleteBooking(bookingid,token);
     }
 
@@ -41,7 +42,8 @@ public class BookingTests extends BaseTest {
     @Test
     @Description("Проверка получения всех id бронирований по имени и фамилии гостя")
     public void getBookingIdsByNameTest () {
-      Bookingid bookingid =   createBooking.createBooking(dataGenerator);
+      Booking booking =   createBooking.prepareBooking(dataGenerator);
+      Bookingid bookingid = createBooking.createBooking(booking);
       List<Integer> ids =   getBookingIds.getBookingIdsByName(bookingid.getBooking());
       Assert.assertNotNull(ids);
     }
@@ -50,7 +52,8 @@ public class BookingTests extends BaseTest {
     @Test
     @Description("Проверка получения всех id бронирований по дате вьезда и выезда")
     public void getBookingIdsByDateTest () {
-        Bookingid bookingid = createBooking.createBooking(dataGenerator);
+        Booking booking = createBooking.prepareBooking(dataGenerator);
+        Bookingid bookingid = createBooking.createBooking(booking);
         List<Integer> ids =   getBookingIds.getBookingIdsByDate(bookingid.getBooking());
         Assert.assertNotNull(ids);
     }
@@ -77,7 +80,8 @@ public class BookingTests extends BaseTest {
     @Description("Проверка успешного частичного апдейта информации по бронированию")
     public void partialUpdateBookingTest () {
         String token = createToken.createToken();
-        Bookingid bookingid = createBooking.createBooking(dataGenerator);
+        Booking booking = createBooking.prepareBooking(dataGenerator);
+        Bookingid bookingid = createBooking.createBooking(booking);
         partialUpdateBooking.partialUpdateBooking(bookingid,token);
     }
 
@@ -85,15 +89,16 @@ public class BookingTests extends BaseTest {
     @Test
     public void updateBookingTest () {
         String token = createToken.createToken();
-        Bookingid bookingid = createBooking.createBooking(dataGenerator);
+        Booking booking = createBooking.prepareBooking(dataGenerator);
+        Bookingid bookingid = createBooking.createBooking(booking);
         updateBooking.updateBooking(bookingid, token);
     }
 
     @Description("Проверка создания брони через pojo")
     @Test
     public void createBookingTest () {
-        Bookingid bookingid = createBooking.createBookingPojo(dataGenerator);
-        Assert.assertNotNull(bookingid);
+        Booking booking = createBooking.prepareBooking(dataGenerator);
+        createBooking.createBooking(booking);
     }
 
     @Description("Проверка получения куки и хедеров ответа")
