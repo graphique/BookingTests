@@ -9,6 +9,8 @@ import io.restassured.http.Headers;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.io.IOException;
 import java.util.List;
 
 public class BookingTests extends BaseTest {
@@ -98,6 +100,13 @@ public class BookingTests extends BaseTest {
     @Test
     public void createBookingTest () {
         Booking booking = createBooking.prepareBooking(dataGenerator);
+        createBooking.createBooking(booking);
+    }
+
+    @Description("Проверка создания брони через внешний json файл")
+    @Test
+    public void createBokingWithJsonTest () throws IOException {
+        Booking booking = createBooking.prepareBooking();
         createBooking.createBooking(booking);
     }
 
