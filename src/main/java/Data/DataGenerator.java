@@ -34,17 +34,27 @@ public class DataGenerator {
         this.checkout = generateCheckout();
     }
 
-
+    /**
+     * генерация имени
+     * @return
+     */
     private String generateFirstName () {
         String name = "tech_firstname";
         return name + getCurrentDateAndTime();
     }
-
+    /**
+     * генерация фамилии
+     * @return
+     */
     private String generateLastName () {
         String name = "tech_lastname";
         return name + getCurrentDateAndTime();
     }
 
+    /**
+     * текущее время для уникальности имени
+     * @return
+     */
     private String getCurrentDateAndTime () {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd-HH-mm-ss");
         LocalDateTime now  = LocalDateTime.now();
@@ -54,10 +64,18 @@ public class DataGenerator {
     DateTimeFormatter date = DateTimeFormatter.ofPattern("YYYY-MM-dd");
     LocalDate today = LocalDate.now();
 
+    /**
+     * метод , генерирующий дату вьезда
+     * @return
+     */
     private String generateCheckin () {
         return date.format(today);
     }
 
+    /**
+     * метод, гнерирующий дату выезда
+     * @return
+     */
     private String generateCheckout () {
         LocalDate then =  today.plusDays(10);
         return date.format(then);

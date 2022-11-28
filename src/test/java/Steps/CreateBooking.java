@@ -12,8 +12,8 @@ import org.testng.Assert;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
 import static io.restassured.RestAssured.given;
+
 public class CreateBooking  {
 
     @Step("prepares a booking with parameter name")

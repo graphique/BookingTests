@@ -5,7 +5,7 @@ import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-public class CreateBookingTest  extends BaseTest{
+public class CreateBookingTest  extends BaseTest {
 
     @Test
     @Description("Проверяем создание брони с разными именами")
