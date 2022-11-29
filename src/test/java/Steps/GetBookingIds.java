@@ -79,11 +79,12 @@ public class GetBookingIds  {
 
 
     @Step("gets an xml information about booking by specific id")
-    public Booking getBooking (Integer id, boolean xml) {
+    public void getBooking (Integer id, boolean xml) {
         RequestSpecification spec = new RequestSpecBuilder().build();
 
         if (xml == true ){
-            spec.header("Accept","application/xml");
+            spec.header("Accept", "application/xml");
+            // spec.contentType(ContentType.XML);
         } else  {
 
         }
@@ -92,9 +93,6 @@ public class GetBookingIds  {
                 .get(Constants.BOOKING + id);
 
         response.then().log().all().statusCode(200);
-
-        Booking booking = response.as(Booking.class);
-        return booking;
     }
 
 }
