@@ -13,13 +13,12 @@ import static io.restassured.RestAssured.given;
 
 public class GetBookingIds  {
 
-//метод для получения всех id
     @Step("gets all booking ids")
     public List<Integer> getBookingIds () {
        Response response = given().log().all()
             .when()
             .get(Constants.BOOKING);
-              List<Integer > ids = response.jsonPath().getList("bookingid");
+              List<Integer > ids = response.jsonPath().getList(Constants.BOOKINGID);
               return ids;
     }
 
@@ -33,7 +32,7 @@ public class GetBookingIds  {
                 .queryParam("lastname",lastname)
                 .when()
                 .get(Constants.BOOKING);
-        List<Integer > ids = response.jsonPath().getList("bookingid");
+        List<Integer > ids = response.jsonPath().getList(Constants.BOOKINGID);
 
         response.then().log().all().statusCode(200);
         return ids;
@@ -52,7 +51,7 @@ public class GetBookingIds  {
                 .queryParam("checkout",checkout)
                 .when()
                 .get(Constants.BOOKING);
-        List<Integer > ids = response.jsonPath().getList("bookingid");
+        List<Integer > ids = response.jsonPath().getList(Constants.BOOKINGID);
 
         response.then().log().all().statusCode(200);
         return ids;
@@ -68,17 +67,19 @@ public class GetBookingIds  {
 
 
     @Step("gets an information about booking by specific id")
-    public void getBooking (Integer id) {
+    public Booking getBooking (Integer id) {
         Response response = given().log().all()
                 .when()
                 .get(Constants.BOOKING + id);
 
         response.then().log().all().statusCode(200);
+        Booking booking = response.as(Booking.class);
+        return booking;
     }
 
 
     @Step("gets an xml information about booking by specific id")
-    public void getBooking (Integer id, boolean xml) {
+    public Booking getBooking (Integer id, boolean xml) {
         RequestSpecification spec = new RequestSpecBuilder().build();
 
         if (xml == true ){
@@ -91,6 +92,9 @@ public class GetBookingIds  {
                 .get(Constants.BOOKING + id);
 
         response.then().log().all().statusCode(200);
+
+        Booking booking = response.as(Booking.class);
+        return booking;
     }
 
 }

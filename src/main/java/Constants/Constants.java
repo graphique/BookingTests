@@ -15,5 +15,5 @@ public  class Constants {
   public static final String PASSWORD = "password123";
 
   //path
-
+  public static final String BOOKINGID = "bookingid";
 }

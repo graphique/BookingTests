@@ -27,7 +27,6 @@ public class UpdateBooking  {
 
         response.then().log().all().statusCode(200);
 
-
         String factFirstName = response.jsonPath().getString("firstname");
         Assert.assertNotEquals(expectedFirstName,factFirstName);
 
